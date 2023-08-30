@@ -1,0 +1,677 @@
+---
+title: "Aula de Rstudio e Tidyverse"
+author: "Thiago N. Gardin"
+date: "2023-05-08"
+output: html_notebook
+---
+
+## Objetivos da Monitoria:
+
+Objetivo Geral:
+
+-   Tornar o estudante capaz realizar Analise Exploratória e Preparação de dados em contextos reais
+
+Objetivos Especificos:
+
+-   Ambientação no Rstudio
+
+    -   Ter familiaridade com os principais Painéis do Rstudio
+
+    -   Usar Scripts e Markdowns
+
+    -   Compreender Limites de Processamento e buscar estratégias alternativas
+
+-   Sintaxe do R:
+
+    -   Compreender os tipos de objetos em R: Valores, matrizes, dataframes, Listas
+
+    -   Saber aplicar Funções Aritiméticas à objetos
+
+    -   Saber aplicar Funções Estatistica à objetos
+
+    -   Saber aplicar Funções de criação de distribuições.
+
+    -   Estrituras de repetição
+
+    -   Familiaridade de pesquisar, Instalar e compreender pacotes de funções.
+
+-   Importação de dados:
+
+    -   Saber Salvar e Abrir objetos em diferentes formatos
+    -   Compreender problemas de encodificação, e padrões internacionais de registro
+    -   Familiaridade com Pacotes de Importação via API
+
+-   Manipulação de dados
+
+    -   Compreender Problemas de Organização de limpeza de dados
+
+    -   Enriquecer dados por meio de funções de fusão de dados
+
+    -   Seleção e Filtragem de dados em contextos de limpeza, amostragem e estratificação
+
+    -   Compreender granularidade e representatividade de dados e aplicar Funções de Agregação
+
+    -   Compreender a diferença entre dados em painel e cross section como dataframes.
+
+-   Visualização de dados
+
+    -   Compreender diferentes formas de representação de variaveis qualitátivas e quantitativas
+
+    -   Compreender e aplicar sintaxe do pacote ggplot2
+
+## Introdução: Analise de dados no contexto de pesquisa
+
+Fluxo de Analise de dados:
+
+```{r fig.height=8, fig.width=8}
+# Criando o grafo
+library(igraph)
+
+g <- graph( c( "Visualização","Interpretação",
+              "Interpretação", "Interesse
+              Desorientação",
+              "Interesse
+              Desorientação","Hipoteses",
+              "Hipoteses","Coleta 
+              de Dados",
+              "Coleta 
+              de Dados" ,"Limpesa 
+              de dados",
+              "Limpesa 
+              de dados","Analise 
+              Exploratória",
+              "Analise 
+              Exploratória","Coleta 
+              de Dados",
+              "Modelagem", "Visualização",
+
+              "Analise 
+              Exploratória","Visualização",
+              "Analise 
+              Exploratória","Modelagem",
+              "Modelagem", "Hipoteses",
+             "Hipoteses", "Interpretação"
+              ))
+
+
+# define a cor do fundo
+par(bg="black")
+
+# plota o grafo com as cores definidas
+plot(g, layout = layout.davidson.harel, vertex.size = 45, vertex.label.dist = .18,
+     edge.arrow.size = 0.3,# vertex.color = vertex_colors, edge.color = edge_colors,
+     vertex.frame.color = "black", vertex.label.color = "white",vertex.shape="none",vertex.label.font = 0.6,
+     vertex.label.font = 0.5, edge.curved=0.2, edge.width=1, main = "",layout.scale = 0.5,
+     margin = c(0.1, 0.1, 0.1, 0.1))
+title(main="Fluxo de Analise de Dados", col.main="#F5F5F5")
+
+
+
+```
+
+## Sintaxe Básica
+
+```{r}
+# Exemplo de código em R
+
+# Comentário de uma linha
+# Para comentar múltiplas linhas, utilize o símbolo '#' no início de cada linha
+
+# Declaração de variáveis
+x <- 5
+y <- 10
+```
+
+```{r}
+
+# Operações matemáticas básicas
+soma <- x + y
+print(soma)
+soma
+```
+
+```{r}
+subtracao <- x - y
+subtracao
+```
+
+```{r}
+multiplicacao <- x * y
+multiplicacao
+```
+
+```{r}
+divisao <- x / y
+divisao
+```
+
+```{r}
+potenciacao <- x ^ 2
+potenciacao
+```
+
+```{r}
+raiz_quadrada <- sqrt(y)
+raiz_quadrada
+
+```
+
+```{r}
+# Impressão de resultados
+cat("A soma de x e y é", soma, "\n")
+cat("A subtração de x e y é", subtracao, "\n")
+cat("A multiplicação de x e y é", multiplicacao, "\n")
+cat("A divisão de x por y é", divisao, "\n")
+cat("O quadrado de x é", potenciacao, "\n")
+cat("A raiz quadrada de y é", raiz_quadrada, "\n")
+
+
+```
+
+```{r}
+# Estruturas de controle de fluxo
+if (x < y) {
+  cat("x é menor que y\n")
+} else {
+  cat("x é maior que y\n")
+}
+
+```
+
+```{r}
+# Laço for
+for (i in 1:5) {
+  cat("O valor de i é", i, "\n")
+}
+
+```
+
+```{r}
+# Vetores
+vetor <- c(1, 2, 3, 4, 5)
+cat("O primeiro elemento do vetor é", vetor[1])
+cat("O segundo elemento do vetor é", vetor[2], "\n")
+cat("O tamanho do vetor é", length(vetor), "\n")
+cat("A soma dos elementos do vetor é", sum(vetor), "\n")
+
+
+```
+
+```{r}
+# Funções
+minha_funcao <- function(a, b) {
+  return(a + b)
+}
+resultado <- minha_funcao(x, y)
+cat("O resultado da função é", resultado, "\n")
+
+```
+
+```{r}
+#função com vetor
+resultado <- minha_funcao(vetor, y)
+resultado
+```
+
+```{r}
+
+# Criando um valor numérico
+a <- 10
+class(a)
+
+```
+
+```{r}
+
+# Criando um valor lógico
+b <- TRUE
+class(b)
+
+
+```
+
+```{r}
+# Criando um vetor numérico
+c <- c(1, 2, 3, 4, 5)
+class(c)
+
+```
+
+```{r}
+
+# Criando um vetor de caracteres
+d <- c("banana", "maçã", "laranja")
+class(d)
+
+```
+
+```{r}
+
+# Criando uma matriz 2x2
+e <- matrix(c(1, 2, 3, 4), nrow=2, ncol=2)
+class(e)
+
+```
+
+```{r}
+
+# Criando um dataframe
+f <- data.frame(nome=c("João", "Maria", "José"), idade=c(20, 25, 30), altura=c(1.75, 1.60, 1.80))
+class(f)
+
+```
+
+```{r}
+
+# Criando uma lista
+g <- list(nome="João", idade=20, altura=1.75)
+class(g)
+
+```
+
+```{r}
+
+# Criando um fator
+h <- factor(c("baixo", "alto", "médio", "baixo"))
+class(h)
+
+```
+
+```{r}
+
+# Criando um vetor de datas
+i <- as.Date(c("2022-05-09", "2022-05-10", "2022-05-11"))
+class(i)
+
+```
+
+```{r}
+# Vetores
+vetor_inteiro <- c(1, 2, 3, 4, 5) # vetor de números inteiros
+vetor_decimal <- c(1.5, 2.2, 3.7, 4.1, 5.9) # vetor de números decimais
+vetor_caracter <- c("a", "b", "c", "d", "e") # vetor de caracteres
+
+```
+
+```{r}
+# Matrizes
+matriz <- matrix(1:6, nrow = 2, ncol = 3) # matriz 2x3
+matriz
+as.data.frame(matriz)
+# Data frames
+df <- data.frame(
+  nome = c("Maria", "João", "Ana"),
+  idade = c(25, 30, 28),
+  salario = c(3500, 4000, 4500)
+) # data frame com três variáveis
+df
+```
+
+```{r}
+
+# Listas
+lista <- list(
+  vetor_inteiro,
+  vetor_decimal,
+  vetor_caracter,
+  matriz,
+  df
+) # lista com diferentes estruturas de dados
+lista
+```
+
+```{r}
+
+# Classes
+classe_vetor <- class(vetor_inteiro) # classe de um vetor
+classe_vetor
+classe_matriz <- class(matriz) # classe de uma matriz
+classe_matriz
+classe_df <- class(df) # classe de um data frame
+classe_df
+classe_lista <- class(lista) # classe de uma lista
+classe_lista
+
+```
+
+Explorando um pacote
+
+```{r}
+#instalar um pacote
+install.packages("dplyr")
+# Carregando o pacote que será explorado
+library(dplyr)
+
+```
+
+```{r}
+# Listando as funções do pacote
+ls("package:dplyr")
+
+```
+
+```{r}
+
+# Obtendo ajuda sobre uma função específica do pacote
+?mutate
+
+# Listando as versões instaladas do pacote
+packageVersion("dplyr")
+
+```
+
+```{r}
+# Verificando dependências do pacote
+packageDescription("tidyverse")
+```
+
+```{r}
+# Obtendo informações gerais sobre o pacote
+packageDescription("dplyr", fields = c("Title", "Description", "Author", "License"))
+
+```
+
+```{r}
+#Obtendo referencias de um pacote
+citation("dplyr")
+```
+
+##Importação de dados - Files
+
+```{r}
+library(readr)
+dataset2_aulaR <- read_csv("dataset2_aulaR.csv", 
+    locale = locale(encoding = "ASCII"))
+View(dataset2_aulaR)
+
+```
+
+```{r}
+write.csv(df,"teste.csv")
+read.csv("teste.csv")
+```
+
+-   pacotes
+
+```{r}
+library(BETS)
+#https://cran.r-project.org/web/packages/BETS/BETS.pdf
+# International reserves - Cash concept
+#BETS::
+# Anual series: GDP at constant prices, in R$ (brazilian reais)
+GDP<-BETSget(1208)
+plot(GDP)
+
+```
+
+```{r}
+library(rbcb)
+library(ggplot2)
+ipca = get_series(433)
+ggplot(ipca, aes(x=date))+
+ geom_line(aes(y=ipca$`433`), col='darkblue')
+```
+
+```{r}
+library(ipeadatar)
+series_ipea<-ipeadatar::available_series()
+view(series_ipea)
+ipeadata("ANDA12_MFERTILIZ12")
+
+```
+
+Outras opções de pacote? - Rsincofi - SidraR
+
+## Manipulação de dados
+
+```{r}
+# Instale o tidyverse caso ainda não tenha feito
+# install.packages("tidyverse")
+
+# Carregue o tidyverse
+library(tidyverse)
+
+```
+
+```{r}
+# Carregue um conjunto de dados de exemplo do pacote ggplot2
+data(diamonds, package = "ggplot2")
+diamonds
+```
+
+```{r}
+# Função filter(): filtra observações de acordo com uma condição
+# Exemplo: selecionar diamantes com preço maior que 5000 e quilates maior que 2.5
+diamonds %>% 
+  filter(price > 5000, carat > 2.5)
+
+```
+
+```{r}
+# Função select(): seleciona variáveis
+# Exemplo: selecionar apenas as variáveis preço, quilates e corte
+diamonds %>% 
+  select(price, carat, cut)
+
+```
+
+```{r}
+# Função arrange(): ordena as observações de acordo com uma ou mais variáveis
+# Exemplo: ordenar diamantes por preço, em ordem decrescente
+diamonds %>% 
+  arrange(desc(price))
+
+```
+
+```{r}
+# Função mutate(): cria ou modifica variáveis
+# Exemplo: criar uma nova variável com o preço por quilate de cada diamante
+diamonds %>% 
+  mutate(price_per_carat = price / carat) 
+
+```
+
+```{r}
+# Função group_by() e summarize(): agrupa observações e calcula estatísticas resumidas para cada grupo
+# Exemplo: calcular a média do preço para cada corte de diamante
+diamonds %>% 
+  group_by(cut) %>% 
+  summarize(mean_price = mean(price))
+summary(diamonds)
+
+```
+
+```{r}
+# Função join(): combina diferentes conjuntos de dados
+# Exemplo: juntar os conjuntos de dados diamonds e uma função usando a variável "carat"
+fator_nacional <- data.frame(color = unique(diamonds$color),
+                             correcao = runif(7,0.3,1.5))
+fator_nacional
+```
+
+```{r}
+diamonds_cutlet <- diamonds %>% 
+  left_join(fator_nacional, by = "color")
+diamonds_cutlet %>% mutate(n_price=price*correcao) %>% select(n_price,price)
+```
+
+```{r}
+library(tidyr)
+
+# Exemplo de um conjunto de dados em formato "wide"
+dados_wide <- data.frame(
+  pessoa = c("Alice", "Bob", "Carol"),
+  sexo = c("F", "M", "F"),
+  idade = c(25, 30, 35),
+  pontuacao_1 = c(70, 80, 90),
+  pontuacao_2 = c(60, 70, 80)
+)
+dados_wide
+```
+
+```{r}
+# Criando um vetor com dados
+dados <- c(10, 15, 18, 20, 23, 30, 40, 50)
+
+# Criando uma nova variável que indica se o valor é maior que 20
+dados$maior20 <- ifelse(dados > 20, "Sim", "Não")
+
+# Visualizando a nova variável
+dados$maior20
+
+```
+
+```{r}
+
+# Exemplo de um conjunto de dados em formato "long"
+dados_long <- dados_wide %>%
+  pivot_longer(
+    cols = starts_with("pontuacao"), # colunas que serão empilhadas
+    names_to = "pontuacao", # nome da nova coluna que conterá os nomes das colunas originais empilhadas
+    values_to = "valor" # nome da nova coluna que conterá os valores das colunas originais empilhadas
+  )
+dados_long
+```
+
+```{r}
+
+# Exemplo de um conjunto de dados em formato "wide" obtido a partir do conjunto "long"
+dados_wide2 <- dados_long %>%
+  pivot_wider(
+    names_from = pontuacao, # nome da coluna do conjunto "long" que contém os nomes das colunas originais empilhadas
+    values_from = valor # nome da coluna do conjunto "long" que contém os valores das colunas originais empilhadas
+  )
+dados_wide2
+```
+
+```{r}
+#Desafio: use a base do exercicio para fazer um empilhamento de colunas.
+income<-read.csv("dataset3_aulaR.csv")
+
+```
+
+## Visualização de dados
+
+```{r}
+# Importando a biblioteca ggplot2
+library(ggplot2)
+
+# Criando um dataframe de exemplo
+dados <- data.frame(
+  grupo = c(rep("A", 6), rep("B", 6)),
+  Competencia = c(1, 5, 8, 5, 1, 18,
+                18, 11, 12, 1, 4, 10),
+  Tempo_carreira = c(0.2, 0.5, 0.8, 0.1, 0.6, 0.9,
+                0.1, 0.2, 0.3, 0.2, 1.6, 1.9),
+  Promoção = factor(c("sim", "nao", "sim", "sim", "nao", "nao",
+                       "sim", "nao", "sim", "sim", "nao", "nao"))
+)
+dados
+```
+
+```{r}
+plot(dados$Competencia,dados$Tempo_carreira,type = "p", main = "Competência por Tempo de Carreira",
+     sub = "Uma analise comparativa", xlab="competencia",ylab = "Tempo de carreira")
+
+boxplot(dados$Competencia~dados$grupo)
+hist(dados$Competencia,dados$grupo)
+```
+
+```{r}
+# library
+library(ggplot2)
+library(hrbrthemes)
+
+
+# Represent it
+p <- dados %>%
+  ggplot( aes(x=Competencia, fill=grupo)) +
+    geom_histogram( color="#e9ecef", alpha=0.6, position = 'identity') +
+    scale_fill_manual(values=c("#69b3a2", "#404080")) +
+    labs(fill="")
+p
+```
+
+```{r}
+
+# Gráfico de barras para variáveis categóricas
+# 
+dados %>% ggplot(aes(x = grupo, y = Competencia, fill = grupo)) +
+  geom_col(stat = "identity", position = "dodge") +
+    geom_point() +
+
+  labs(title = "Gráfico de barras", x = "Grupo", y = "Variável 1")
+```
+
+```{r}
+
+# Gráfico de pontos para variáveis numéricas contínuas
+dados%>% ggplot(aes(x = Competencia, y = Tempo_carreira,col=grupo)) +
+  geom_point() +
+  labs(title = "Gráfico de pontos", x = "Variável 2", y = "Variável 1")
+```
+
+```{r}
+
+# Gráfico de caixas para variáveis numéricas discretas ou categóricas
+ggplot(dados, aes(x = variavel3, y = variavel1, fill = variavel3)) +
+  geom_boxplot() +
+  labs(title = "Gráfico de caixas", x = "Variável 3", y = "Variável 1")
+```
+
+```{r}
+
+# Gráfico de dispersão com regressão para relação entre variáveis
+dados %>% mutate(curva_denivel=seq(1:12)) %>% 
+  ggplot(aes(x = Competencia, y = Tempo_carreira)) +
+  geom_point()+geom_density_2d(aes(x=curva_denivel))
+  geom_smooth() +
+  labs(title = "Gráfico de dispersão com regressão", x = "Variável 1", y = "Variável 2")
+
+```
+
+```{r}
+# Gráfico de dispersão com regressão para relação entre variáveis
+ggplot(dados, aes(x = variavel1, y = variavel2, col=grupo)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(title = "Gráfico de dispersão com regressão", x = "Variável 1", y = "Variável 2")
+
+```
+
+## Case de analise Exploratória
+
+```{r}
+library(siconfir)
+# Orçamento do Estado de São Paulo
+SP_orc<-get_annual_acc(year = 2016:2019, cod = 35)
+summary(SP_orc)
+unique(SP_orc$anexo)
+
+```
+
+```{r}
+SP_orc$instituicao %>% unique()
+SP_orc$anexo %>% unique()
+SP_orc$rotulo %>% unique()
+SP_orc$coluna %>% unique()
+SP_orc$conta %>% unique() %>% length()
+
+```
+
+```{r}
+SP_orc_sp<-SP_orc %>% filter(conta=="06 - Segurança Pública") %>%
+  filter(anexo=="DCA-Anexo I-E")
+summary(SP_orc_sp)
+table(SP_orc_sp$coluna)
+SP_orc_sp$coluna<-as.factor(SP_orc_sp$coluna)
+SP_orc_sp$anexo %>% unique()
+SP_orc_sp$rotulo %>% unique()
+SP_orc_sp$coluna %>% unique()
+SP_orc_sp$conta %>% unique() %>% length()
+```
+
+```{r}
+SP_orc_sp %>% ggplot(aes(x=exercicio,y=valor))+geom_point()+
+  facet_wrap(~coluna)+labs(title = "Despesas de Segurança Pública de SP",subtitle = "ciclo de despesas")+geom_smooth()
+```
